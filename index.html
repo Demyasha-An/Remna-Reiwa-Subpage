@@ -1686,6 +1686,14 @@ body::before {
         // Global state
         let panelData = null;
         let appConfig = null;
+        let appConfigReady = false;
+
+        // The page renders only once BOTH sources have settled. appConfigReady is
+        // set even when the app-config request failed (a fallback config is used
+        // instead), so a failed request can never leave the user with a blank page.
+        function maybeRender() {
+            if (panelData && appConfigReady) renderContent();
+        }
         let currentLanguage = 'en';
         let currentPlatform = 'ios';
         let currentApp = null;
@@ -2002,11 +2010,46 @@ oh/uZMozC65SmDw+N5p6Su8CAwEAAQ==
             return appConfig?.locales?.includes(lang) ? lang : (appConfig?.locales?.[0] || 'en');
         }
 
-        function loadAppConfig() {
-            fetch('/assets/.app-config-v2.json')
+        // Since Subscription Page v8.0.0 the /assets path is served behind
+        // checkAssetsCookieMiddleware: without a valid `session` cookie the
+        // connection is destroyed instead of returning 404. The cookie is set
+        // together with the page itself, so this normally works — but a lost
+        // race or a proxy hiccup must never leave the user with a blank page.
+        const APP_CONFIG_ATTEMPTS = 3;
+
+        function createFallbackAppConfig() {
+            return {
+                baseSettings: {},
+                brandingSettings: {},
+                platforms: {},
+                uiConfig: {},
+                locales: ['en', 'ru'],
+                baseTranslations: {
+                    unknown: { en: 'No data found', ru: 'Данные не найдены' },
+                },
+            };
+        }
+
+        function fetchAppConfig(attempt = 1) {
+            // Cache-busting mirrors the upstream frontend (root.layout.tsx).
+            const url = '/assets/.app-config-v2.json?v=' + Date.now();
+            return fetch(url, { credentials: 'same-origin' })
                 .then(response => {
                     if (!response.ok) throw new Error(`Failed to load config: ${response.status}`);
                     return response.json();
+                })
+                .catch(error => {
+                    if (attempt >= APP_CONFIG_ATTEMPTS) throw error;
+                    return new Promise(resolve => setTimeout(resolve, 250 * attempt))
+                        .then(() => fetchAppConfig(attempt + 1));
+                });
+        }
+
+        function loadAppConfig() {
+            fetchAppConfig()
+                .catch(error => {
+                    console.error('Error loading app config, using fallback:', error);
+                    appConfig = createFallbackAppConfig();
                 })
                 .then(data => {
                     appConfig = data;
@@ -2046,10 +2089,14 @@ oh/uZMozC65SmDw+N5p6Su8CAwEAAQ==
                     updateTexts();
                 })
                 .catch(error => {
-                    console.error('Error loading app config:', error);
+                    // The request itself is already handled above; this catches
+                    // failures while applying the config. Still render afterwards.
+                    console.error('Error applying app config:', error);
+                    appConfig = appConfig || createFallbackAppConfig();
                 })
                 .finally(() => {
-                    if (panelData) renderContent();
+                    appConfigReady = true;
+                    maybeRender();
                 });
         }
 
@@ -2061,7 +2108,7 @@ oh/uZMozC65SmDw+N5p6Su8CAwEAAQ==
                 console.error('Error loading panel data:', error);
                 panelData = { response: { isFound: false } };
             }
-            if (appConfig !== null) renderContent();
+            maybeRender();
         }
 
         // Translation function

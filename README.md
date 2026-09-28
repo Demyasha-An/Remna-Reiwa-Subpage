@@ -54,7 +54,7 @@
 
 ```bash
 cd /opt/remnawave/subscription/
-curl -L -s -O https://raw.githubusercontent.com/d3myasha/Remna-Reiwa-Subpage/main/setup.sh && bash setup.sh
+curl -L -s -O https://raw.githubusercontent.com/Demyasha-An/Remna-Reiwa-Subpage/main/setup.sh && bash setup.sh
 ```
 
 ### Неинтерактивно (с выбором темы)
@@ -74,7 +74,7 @@ bash setup.sh -t 2 -l ru        # Тема Monochrome + русский язык
 ```bash
 cd /opt/remnawave/subscription/
 rm -rf setup.sh index.html
-curl -L -s -O https://raw.githubusercontent.com/d3myasha/Remna-Reiwa-Subpage/main/setup.sh && bash setup.sh
+curl -L -s -O https://raw.githubusercontent.com/Demyasha-An/Remna-Reiwa-Subpage/main/setup.sh && bash setup.sh
 ```
 
 ---
@@ -89,11 +89,11 @@ curl -L -s -O https://raw.githubusercontent.com/d3myasha/Remna-Reiwa-Subpage/mai
 ```bash
 # Через curl
 curl -L -o /opt/remnawave/subscription/index.html \
-  https://raw.githubusercontent.com/d3myasha/Remna-Reiwa-Subpage/main/index.html
+  https://raw.githubusercontent.com/Demyasha-An/Remna-Reiwa-Subpage/main/index.html
 
 # Или через wget
 wget -O /opt/remnawave/subscription/index.html \
-  https://raw.githubusercontent.com/d3myasha/Remna-Reiwa-Subpage/main/index.html
+  https://raw.githubusercontent.com/Demyasha-An/Remna-Reiwa-Subpage/main/index.html
 ```
 
 ### 2. Добавь volume mount в `docker-compose.yml`
@@ -222,6 +222,6 @@ MIT © 2026 — полный текст в [LICENSE](LICENSE).
 
 **Сделано с** ❤️ **для RemnaWave**
 
-[Сообщить о баге](https://github.com/d3myasha/Remna-Reiwa-Subpage/issues) • [Предложить фичу](https://github.com/d3myasha/Remna-Reiwa-Subpage/issues)
+[Сообщить о баге](https://github.com/Demyasha-An/Remna-Reiwa-Subpage/issues) • [Предложить фичу](https://github.com/Demyasha-An/Remna-Reiwa-Subpage/issues)
 
 </div>

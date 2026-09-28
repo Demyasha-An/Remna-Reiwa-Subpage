@@ -11,10 +11,10 @@ set -euo pipefail
 #   bash setup.sh -t 1 -m light  # Purple light variant
 #
 # One-liner (download + run):
-#   curl -L -s -O https://raw.githubusercontent.com/d3myasha/Remna-Reiwa-Subpage/main/setup.sh && bash setup.sh -t 3
+#   curl -L -s -O https://raw.githubusercontent.com/Demyasha-An/Remna-Reiwa-Subpage/main/setup.sh && bash setup.sh -t 3
 # ═══════════════════════════════════════════════════════════════════════════
 
-REPO_URL="https://raw.githubusercontent.com/d3myasha/Remna-Reiwa-Subpage/main"
+REPO_URL="https://raw.githubusercontent.com/Demyasha-An/Remna-Reiwa-Subpage/main"
 
 # ── Argument parsing ─────────────────────────────────────────────────────
 THEME_ARG=""
