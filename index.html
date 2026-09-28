@@ -9,10 +9,10 @@
         document.documentElement.classList.add(dark ? 'color-mode-dark' : 'color-mode-light');
     })();
     </script>
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon-180x180.png" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png" />
-    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-180x180.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#c4b5fd" id="themeColor" data-theme-light="#c4b5fd" data-theme-dark="#c084fc">
     <script type="application/json" id="warpColorsLight">[[0.94, 0.90, 0.99],[0.62, 0.42, 0.92],[0.97, 0.95, 1.0],[0.52, 0.32, 0.82]]</script>
@@ -2054,7 +2054,7 @@ oh/uZMozC65SmDw+N5p6Su8CAwEAAQ==
         }
 
         function loadPanelData() {
-            const panelDataB64 = '<%= panelData %>';
+            const panelDataB64 = '<%- panelData %>';
             try {
                 panelData = JSON.parse(atob(panelDataB64));
             } catch (error) {
